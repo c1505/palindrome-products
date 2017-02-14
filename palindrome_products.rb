@@ -1,4 +1,12 @@
 require 'pry'
+class Palindrome
+  attr_reader :value, :factors
+  def initialize(value, factors)
+    @value = factors[0] * factors[1]
+    @factors = [factors.reverse]
+  end
+end
+
 class Palindromes
   attr_reader :values, :min_factor, :max_factor, :value
   def initialize(args)
@@ -20,12 +28,12 @@ class Palindromes
   end
 
   def largest
-    @value = @factor_list.first[0] * @factor_list.first[1]
-    self
+    value = @factor_list.first[0] * @factor_list.first[1]
+    Palindrome.new(value, @factor_list.first)
   end
 
 
-  def factors
+  def factors #this neds to include all the factors
     [@factor_list.first.reverse]
   end
 

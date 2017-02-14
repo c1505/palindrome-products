@@ -5,7 +5,6 @@ require_relative 'palindrome_products'
 
 class PalindromesTest < Minitest::Test
   def test_largest_palindrome_from_single_digit_factors
-    skip
     palindromes = Palindromes.new(max_factor: 9)
     palindromes.generate
     largest = palindromes.largest
