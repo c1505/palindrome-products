@@ -1,37 +1,53 @@
+require 'pry'
 class Palindromes
-  attr_reader :value
+  attr_reader :values, :min_factor, :max_factor, :value
   def initialize(args)
-    @value = args[:max_factor]
+    @max_factor = args[:max_factor]
+    @min_factor = args[:min_factor] || 1
+    @values = []
+    @factor_list = []
   end
 
   def generate
+    total = max_factor * max_factor
+    until total == min_factor
+      if palindrome?(total)
+        generate_factors(total)
+        @values << total
+      end
+      total -= 1
+    end
   end
 
   def largest
+    @value = @factor_list.first[0] * @factor_list.first[1]
     self
   end
 
+
   def factors
-    @factors_array = []
-    @factors_array << [1, self.value]
-    factor1 = factor[0]
-    factor2 = self.value / factor1
-    @factors_array << [factor1, factor2]
-    # array of arrays
+    [@factor_list.first.reverse]
   end
 
-  def factor
-    divisor = 2
-    factors = []
-    while divisor < self.value
-      if self.value % divisor == 0
-        factors << divisor
-      end
-      divisor += 1
-    end
-    factors
+
+
+
+  private
+
+  def palindrome?(number)
+    number.to_s == number.to_s.reverse
   end
-  # def value
-  #
-  # end
+
+  def generate_factors(palindrome_value)
+    factor = max_factor
+    until factor == min_factor
+      if palindrome_value % factor == 0
+        if palindrome_value/factor <= max_factor
+          @factor_list << [factor, palindrome_value/factor]
+        end
+      end
+      factor -= 1
+    end
+  end
+
 end
